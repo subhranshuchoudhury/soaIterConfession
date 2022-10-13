@@ -12,9 +12,16 @@ const app = express();
 // cors
 
 app.use((req, res, next) => {
-  res.header({ "Access-Control-Allow-Origin": "*" });
+  res.header({
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  });
   next();
 });
+
+// json parser
+
+app.use(bodyParser.json());
 
 // mongoose
 
@@ -41,10 +48,6 @@ const POST_SCHEMA = new mongoose.Schema({
 });
 
 const Post = new mongoose.model("post", POST_SCHEMA);
-
-// json parser
-
-app.use(bodyParser.json());
 
 // homepage
 
