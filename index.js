@@ -13,15 +13,15 @@ const app = express();
 // cors
 
 // app.use(cors());
-app.options(`/${process.env.SECRET_KEY}/posts`, cors()); // enable pre-flight request for Posts
+app.options("*", cors()); // include before other routes
+// app.options(`/${process.env.SECRET_KEY}/posts`, cors()); // enable pre-flight request for Posts
 
-// app.use((req, res, next) => {
-//   res.header({
-//     "Access-Control-Allow-Origin": "*",
-//     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-//   });
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header({
+    "Access-Control-Allow-Origin": "*",
+  });
+  next();
+});
 
 // json parser
 
@@ -78,7 +78,7 @@ app.get(`/${process.env.SECRET_KEY}/create-user`, (req, res) => {
 // post route
 
 app
-  .route(`/${process.env.SECRET_KEY}/posts`)
+  .route(`/${process.env.SECRET_KEY}/posts`, cors())
   // get posts
   .get((req, res) => {
     Post.find((error, posts) => {
