@@ -12,7 +12,8 @@ const app = express();
 
 // cors
 
-app.use(cors());
+// app.use(cors());
+app.options(`/${process.env.SECRET_KEY}/posts`, cors()); // enable pre-flight request for Posts
 
 // app.use((req, res, next) => {
 //   res.header({
