@@ -39,6 +39,7 @@ const POST_SCHEMA = new mongoose.Schema({
   issecret: Boolean,
   secretKey: String,
   timestamp: String,
+  imgsrc: String,
   browserdetails: String,
   like: [String],
   dislike: [String],
@@ -98,6 +99,7 @@ app
     const secretKey = req.body.secretKey;
     const timeStamp = req.body.timestamp;
     const browserDetails = req.body.browserdetails;
+    const imgsrc = req.body.imgsrc;
 
     // check point.
 
@@ -124,6 +126,7 @@ app
         category: category,
         secretkey: secretKey,
         timestamp: timeStamp,
+        imgsrc: imgsrc,
         browserdetails: browserDetails,
       });
 
