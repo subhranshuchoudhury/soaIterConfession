@@ -12,10 +12,6 @@ const app = express();
 
 // cors
 
-// app.use(cors());
-app.options("*", cors()); // include before other routes
-// app.options(`/${process.env.SECRET_KEY}/posts`, cors()); // enable pre-flight request for Posts
-
 app.use((req, res, next) => {
   res.header({
     "Access-Control-Allow-Origin": "*",
@@ -78,9 +74,9 @@ app.get(`/${process.env.SECRET_KEY}/create-user`, (req, res) => {
 // post route
 
 app
-  .route(`/${process.env.SECRET_KEY}/posts`, cors())
+  .route(`/${process.env.SECRET_KEY}/posts`)
   // get posts
-  .get((req, res) => {
+  .get(cors(), (req, res) => {
     Post.find((error, posts) => {
       if (error) {
         res.status(500).json({ message: "not ok" });
@@ -90,7 +86,7 @@ app
     });
   })
   // post a message
-  .post((req, res) => {
+  .post(cors(), (req, res) => {
     // json request data.
 
     const title = req.body.title;
@@ -146,7 +142,7 @@ app
     }
   })
   // delete a post.
-  .delete((req, res) => {
+  .delete(cors(), (req, res) => {
     const ID = req.body.id;
     const userID = req.body.userid;
     const adminKey = req.body.adminkey; // optional. for admins.
@@ -173,7 +169,7 @@ app
 
 app
   .route(`/${process.env.SECRET_KEY}/comments`)
-  .post((req, res) => {
+  .post(cors(), (req, res) => {
     const username = req.body.username;
     const userID = req.body.userid;
     const comment = req.body.comment;
@@ -214,7 +210,7 @@ app
     );
   })
   // delete comment
-  .delete((req, res) => {
+  .delete(cors(), (req, res) => {
     const ID = req.body.id;
     const timestamp = req.body.timestamp;
     const userID = req.body.userid;
@@ -248,6 +244,7 @@ app
 
 app.get(
   `/admin/delete/${process.env.ADMIN_KEY}/${process.env.SECRET_KEY}/:_id`,
+  cors(),
   (req, res) => {
     const ID = req.params._id;
     Post.deleteOne({ _id: ID }, (err) => {
