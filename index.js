@@ -240,6 +240,22 @@ app
     );
   });
 
+// only for admins
+
+app.get(
+  `/admin/delete/${process.env.ADMIN_KEY}/${process.env.SECRET_KEY}/:_id`,
+  (req, res) => {
+    const ID = req.params._id;
+    Post.deleteOne({ _id: ID }, (err) => {
+      if (err) {
+        res.status(404).json({ message: "not ok", error: err });
+      } else {
+        res.status(200).json({ message: "ok" });
+      }
+    });
+  }
+);
+
 // server port.
 
 app.listen(process.env.PORT || 4000, () => {
