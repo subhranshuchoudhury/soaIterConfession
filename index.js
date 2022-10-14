@@ -6,18 +6,21 @@ const mongoose = require("mongoose");
 const { v4 } = require("uuid");
 const supervillains = require("supervillains");
 const superheroes = require("superheroes");
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
 
 // cors
 
-app.use((req, res, next) => {
-  res.header({
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-  });
-  next();
-});
+app.use(cors());
+
+// app.use((req, res, next) => {
+//   res.header({
+//     "Access-Control-Allow-Origin": "*",
+//     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+//   });
+//   next();
+// });
 
 // json parser
 
